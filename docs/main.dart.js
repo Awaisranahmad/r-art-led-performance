@@ -27352,7 +27352,7 @@ at4(a,b){var s=0,r=A.R(t.AT),q,p,o,n,m,l,k,j,i,h,g
 var $async$at4=A.S(function(c,d){if(c===1)return A.O(d,r)
 for(;;)switch(s){case 0:h=A.aPG(a)
 g=h==null?null:h.hv(a,null)
-if(g==null)throw A.e(A.by("Image decode nahi hui: "+b,null,null))
+if(g==null)throw A.e(A.by("Could not decode image: "+b,null,null))
 p=t.t
 o=A.c([],p)
 n=0
@@ -92754,7 +92754,7 @@ break
 case 6:p=5
 f=o.pop()
 j=A.a6(f)
-n.np("Photo decode nahi hui: "+A.o(j))
+n.np("Could not decode photo: "+A.o(j))
 s=8
 break
 case 5:s=2
@@ -92784,8 +92784,8 @@ r.qM(new A.z0(new A.aiq(h,f,a),q,!0,0.5625,g,g,g,g,g,s.ry.e,!0,!0,g,g,g,!1,g,"Cl
 xJ(){var s=0,r=A.R(t.H),q=this
 var $async$xJ=A.S(function(a,b){if(a===1)return A.O(b,r)
 for(;;)switch(s){case 0:s=2
-return A.T(A.avx(B.c4.cV(B.d1.Vf(q.d.lG(),null)),"Project save karo","r-art-show.json"),$async$xJ)
-case 2:q.np("Project save ho gaya.")
+return A.T(A.avx(B.c4.cV(B.d1.Vf(q.d.lG(),null)),"Save project","r-art-show.json"),$async$xJ)
+case 2:q.np("Project saved.")
 return A.P(null,r)}})
 return A.Q($async$xJ,r)},
 pz(){var s=0,r=A.R(t.H),q,p=2,o=[],n=this,m,l,k,j,i,h,g
@@ -92803,14 +92803,14 @@ s=9
 return A.T(A.apj(t.a.a(B.d1.UH(B.Y.eJ(m),null))),$async$pz)
 case 9:l=b
 n.ai(new A.ait(n,l))
-n.np("Project khul gaya ("+l.gqn()+" photos).")
+n.np("Project opened ("+l.gqn()+" photos).")
 p=2
 s=8
 break
 case 6:p=5
 g=o.pop()
 k=A.a6(g)
-n.np("Project load nahi hua: "+A.o(k))
+n.np("Could not load project: "+A.o(k))
 s=8
 break
 case 5:s=2
@@ -92821,7 +92821,7 @@ return A.Q($async$pz,r)},
 rU(){var s=0,r=A.R(t.H),q,p=this,o,n,m,l,k
 var $async$rU=A.S(function(a,b){if(a===1)return A.O(b,r)
 for(;;)switch(s){case 0:k=p.d
-if(k.gqn()===0){p.np("Pehle koi photo add karo.")
+if(k.gqn()===0){p.np("Add a photo first.")
 s=1
 break}o=A.aw5(k.Vj())
 n=A.aHn(o)
@@ -92832,33 +92832,33 @@ s=3
 return A.T(A.aQC(new A.ail(p,30-m,o,n),l,t.y),$async$rU)
 case 3:if(b!==!0){s=1
 break}s=4
-return A.T(A.avx(B.c4.cV(A.aHm(A.aw5(k.Vj()),30)),"data.h save karo","data.h"),$async$rU)
-case 4:p.np("data.h export ho gaya ("+o.length+" bytes).")
+return A.T(A.avx(B.c4.cV(A.aHm(A.aw5(k.Vj()),30)),"Save data.h","data.h"),$async$rU)
+case 4:p.np("data.h exported ("+o.length+" bytes).")
 case 1:return A.P(q,r)}})
 return A.Q($async$rU,r)},
 adv(){var s,r=this
-if(r.d.gqn()===0){r.np("Pehle koi photo add karo.")
+if(r.d.gqn()===0){r.np("Add a photo first.")
 return}s=r.c
 s.toString
 A.fH(s,!1).qM(A.awL(new A.ais(r),null,t.H))},
 agB(a){var s,r,q,p=null,o=this.d.b[a],n=o==null,m=n?B.CG:A.aQo(o.r),l=n?p:o.b
-l=A.ej(l==null?"Khaali slot "+(a+1):l,1,B.bC,p)
-if(n)s=B.ZS
+l=A.ej(l==null?"Empty slot "+(a+1):l,1,B.bC,p)
+if(n)s=B.ZD
 else{s=o.a
 r=B.d.a0(o.c/1000,1)
 q=o.d?"  \u2022  flipped":""
 q=A.ej(""+s.b+" x "+s.c+"  \u2022  "+r+"s"+q,p,p,p)
 s=q}r=A.c([B.nv],t.F)
-if(!n)r.push(A.of(p,p,B.FC,p,p,new A.aiA(this,a),p,p,"Hatao"))
+if(!n)r.push(A.of(p,p,B.FC,p,p,new A.aiA(this,a),p,p,"Remove"))
 return A.K5(!1,p,p,p,!0,p,p,p,!0,p,new A.dm("slot_"+a,t.kK),m,p,p,p,p,new A.aiB(this,a),!1,p,p,p,p,s,p,l,A.hI(r,B.ar,B.a5,B.bp,0),p)},
 ET(a){var s=this,r=null,q=a*10,p=a+1,o=p*10,n=B.e.cf(s.d.b,q,o),m=new A.aQ(n,new A.aiw(),A.a3(n).h("aQ<1>")).gu(0)
 n=s.c
 n.toString
 return new A.H4(B.Ev,A.lw(A.c([new A.cF(B.EA,A.ej("Section "+p+"  \u2022  Photos "+(q+1)+"\u2013"+o+"  \u2022  "+m+"/10",r,r,A.V(n).ok.w),r),new A.An(new A.aix(s,a),10,new A.aiy(s,a),B.Qs,!0,r)],t.F),B.aY,B.a5,B.ba),r)},
-T(a){var s,r=this,q=null,p=t.F,o=A.lw(A.c([B.ZE,A.ej("LED Performance  \u2022  "+r.d.gqn()+"/30 photos",q,q,A.V(a).ok.Q)],p),B.aY,B.a5,B.ba)
-o=A.aut(A.c([A.of(q,q,B.FE,q,q,r.gadw(),q,q,"Project kholo"),A.of(q,q,B.FJ,q,q,r.gafS(),q,q,"Project save karo")],p),o)
-s=A.arP(A.lw(A.c([new A.cF(B.Eu,A.ej("Photo add karo, order set karo, preview dekho, phir data.h export karo \u2014 firmware mein flash karne ke liye.",q,q,A.V(a).ok.z),q),r.ET(0),r.ET(1),r.ET(2),B.UI],p),B.ar,B.a5,B.ba),q)
-return A.axJ(o,s,new A.w8(A.hI(A.c([new A.Br(!0,r.gadu(),q,q,q,q,B.I,q,!1,q,!0,q,new A.U6(B.ZF,B.FF,q,q,q),q),new A.xJ(!0,r.ga7Y(),q,q,q,q,B.I,q,!1,q,!0,q,new A.Q3(B.zI,B.FD,q,q,q),q)],p),B.ar,B.k7,B.ba,0),q))}}
+T(a){var s,r=this,q=null,p=t.F,o=A.lw(A.c([B.ZG,A.ej("LED Performance  \u2022  "+r.d.gqn()+"/30 photos",q,q,A.V(a).ok.Q)],p),B.aY,B.a5,B.ba)
+o=A.aut(A.c([A.of(q,q,B.FE,q,q,r.gadw(),q,q,"Open project"),A.of(q,q,B.FJ,q,q,r.gafS(),q,q,"Save project")],p),o)
+s=A.arP(A.lw(A.c([new A.cF(B.Eu,A.ej("Add photos, set the order, check the preview, then export data.h to flash to the firmware.",q,q,A.V(a).ok.z),q),r.ET(0),r.ET(1),r.ET(2),B.UI],p),B.ar,B.a5,B.ba),q)
+return A.axJ(o,s,new A.w8(A.hI(A.c([new A.Br(!0,r.gadu(),q,q,q,q,B.I,q,!1,q,!0,q,new A.U6(B.ZH,B.FF,q,q,q),q),new A.xJ(!0,r.ga7Y(),q,q,q,q,B.I,q,!1,q,!0,q,new A.Q3(B.zI,B.FD,q,q,q),q)],p),B.ar,B.k7,B.ba,0),q))}}
 A.aiu.prototype={
 $0(){var s=this.c
 this.a.d.b[this.b]=s
@@ -92898,7 +92898,7 @@ for(s=0,r=r.b,q=q.b;s<30;++s)r[s]=q[s]},
 $S:0}
 A.ail.prototype={
 $1(a){var s=this,r=null,q=t.F
-return new A.qD(B.zI,A.lw(A.c([A.ej("Photos: "+s.a.d.gqn()+" bhari, "+s.b+" khaali",r,r,r),A.ej("Total bytes: "+s.c.length,r,r,r),A.ej("Widths: "+B.e.bB(s.d,", "),r,r,r),B.dD,B.ZN,B.dD,B.ZR],q),B.aY,B.a5,B.bp),A.c([new A.Br(!1,new A.aij(a),r,r,r,r,r,r,!1,r,!0,r,B.ZK,r),A.avy(B.ZP,new A.aik(a))],q),r)},
+return new A.qD(B.zI,A.lw(A.c([A.ej("Photos: "+s.a.d.gqn()+" filled, "+s.b+" empty",r,r,r),A.ej("Total bytes: "+s.c.length,r,r,r),A.ej("Widths: "+B.e.bB(s.d,", "),r,r,r),B.dD,B.ZC,B.dD,B.ZJ],q),B.aY,B.a5,B.bp),A.c([new A.Br(!1,new A.aij(a),r,r,r,r,r,r,!1,r,!0,r,B.ZM,r),A.avy(B.ZR,new A.aik(a))],q),r)},
 $S:515}
 A.aij.prototype={
 $0(){return A.fH(this.a,!1).vi(!1)},
@@ -92943,7 +92943,7 @@ for(s=0;s<30;++s)if(this.a.c.b[s]!=null)r.push(s)
 return r},
 aL(){this.be()
 this.d=B.e.ga4(this.gNP())},
-T(a){var s,r,q,p,o,n=this,m=null,l=n.a.c.b[n.d],k=l.Yf(),j=A.aut(m,B.ZD),i=n.gNP(),h=A.a3(i).h("ae<1,nC>")
+T(a){var s,r,q,p,o,n=this,m=null,l=n.a.c.b[n.d],k=l.Yf(),j=A.aut(m,B.ZF),i=n.gNP(),h=A.a3(i).h("ae<1,nC>")
 i=A.K(new A.ae(i,new A.akJ(n),h),h.h("aH.E"))
 i=A.ayH(i,8)
 h=A.ej(l.b,m,m,A.V(a).ok.w)
@@ -92952,7 +92952,7 @@ r=n.e
 q=B.d.aF(r)
 p=""+q
 o=t.F
-return A.axJ(j,A.arP(A.lw(A.c([i,B.kW,h,s,B.kW,new A.zM(k,q,m),B.dD,A.hI(A.c([B.ZH,A.a_f(A.ay1(9,p+" ms/col",100,10,new A.akK(n),r),1),A.ej(p+" ms",m,m,m)],o),B.ar,B.a5,B.ba,0),B.dD,B.ZJ],o),B.aY,B.a5,B.ba),B.EB),m)}}
+return A.axJ(j,A.arP(A.lw(A.c([i,B.kW,h,s,B.kW,new A.zM(k,q,m),B.dD,A.hI(A.c([B.ZK,A.a_f(A.ay1(9,p+" ms/col",100,10,new A.akK(n),r),1),A.ej(p+" ms",m,m,m)],o),B.ar,B.a5,B.ba,0),B.dD,B.ZO],o),B.aY,B.a5,B.ba),B.EB),m)}}
 A.akJ.prototype={
 $1(a){var s=null,r=this.a
 return new A.nC(A.ej(""+(a+1),s,s,s),new A.akI(r,a),a===r.d,s)},
@@ -93006,13 +93006,13 @@ j=n.d
 k=A.ej("Brightness: "+B.d.a0(n.e,1)+"x",o,o,o)
 l=n.e
 k=A.K5(!1,o,o,o,!0,o,o,o,!0,o,o,o,o,o,o,o,o,!1,o,o,o,o,A.ay1(18,B.d.a0(l,1)+"x",2,0.2,new A.akh(p,n),l),o,k,o,o)
-l=A.K5(!1,o,o,o,!0,o,o,o,!0,o,o,o,o,o,o,o,o,!1,o,o,o,o,A.ej(""+n.f*90+"\xb0 clockwise",o,o,o),o,B.ZQ,A.of(o,o,B.FH,o,o,new A.aki(p,n),o,o,"90\xb0 ghumao"),o)
+l=A.K5(!1,o,o,o,!0,o,o,o,!0,o,o,o,o,o,o,o,o,!1,o,o,o,o,A.ej(""+n.f*90+"\xb0 clockwise",o,o,o),o,B.ZS,A.of(o,o,B.FH,o,o,new A.aki(p,n),o,o,"Rotate 90\xb0"),o)
 s=A.ej(B.d.a0(n.c/1000,1)+" seconds per photo",o,o,o)
 r=n.c
-q=A.of(o,o,B.FI,o,o,r>500?new A.akj(p,n):o,o,o,"Kam karo")
-s=A.K5(!1,o,o,o,!0,o,o,o,!0,o,o,o,o,o,o,o,o,!1,o,o,o,o,s,o,B.ZL,A.hI(A.c([q,A.of(o,o,B.nt,o,o,r<1e4?new A.akk(p,n):o,o,o,"Zyada karo")],h),B.ar,B.a5,B.bp,0),o)
+q=A.of(o,o,B.FI,o,o,r>500?new A.akj(p,n):o,o,o,"Decrease")
+s=A.K5(!1,o,o,o,!0,o,o,o,!0,o,o,o,o,o,o,o,o,!1,o,o,o,o,s,o,B.ZN,A.hI(A.c([q,A.of(o,o,B.nt,o,o,r<1e4?new A.akk(p,n):o,o,o,"Increase")],h),B.ar,B.a5,B.bp,0),o)
 q=p.a
-return new A.cF(new A.aV(16,16,16,m.f.d+16),A.arP(A.lw(A.c([i,B.kW,new A.Nk(j,new A.akl(p,n),B.ZO,B.ZI,o),k,l,s,B.dD,A.hI(A.c([A.ax6(B.FG,B.ZC,q.e),B.UF,A.ax6(B.FK,B.ZG,q.f),B.UV,A.avy(B.ZM,new A.akm(a))],h),B.ar,B.a5,B.ba,0)],h),B.aY,B.a5,B.bp),o),o)}}
+return new A.cF(new A.aV(16,16,16,m.f.d+16),A.arP(A.lw(A.c([i,B.kW,new A.Nk(j,new A.akl(p,n),B.ZQ,B.ZL,o),k,l,s,B.dD,A.hI(A.c([A.ax6(B.FG,B.ZE,q.e),B.UF,A.ax6(B.FK,B.ZI,q.f),B.UV,A.avy(B.ZP,new A.akm(a))],h),B.ar,B.a5,B.ba,0)],h),B.aY,B.a5,B.bp),o),o)}}
 A.akg.prototype={
 $3(a,b,c){return B.UH},
 $S:203}
@@ -93080,7 +93080,7 @@ T(a){var s,r,q,p=this,o=null,n=p.a,m=n.c,l=m.b,k=p.d
 k===$&&A.a()
 k=A.iN(k,new A.akA(p,m),o)
 s=p.e
-r=s?"Roko":"Chalao"
+r=s?"Pause":"Play"
 q=t.F
 return A.lw(A.c([new A.GF(l/50,k,o),B.dD,A.hI(A.c([A.of(o,o,A.avV(s?B.Fs:B.Ft,o),o,o,new A.akB(p),o,o,r),A.ej(""+l+" columns  \u2022  "+B.d.a0(l*n.d/1000,1)+"s per sweep",o,o,o)],q),B.ar,B.k6,B.ba,0)],q),B.ar,B.a5,B.bp)}}
 A.akA.prototype={
@@ -99132,25 +99132,25 @@ B.Yc=new A.r(!0,B.V,null,".AppleSystemUIFont",null,null,null,null,null,null,null
 B.Yw=new A.r(!0,B.o,null,".AppleSystemUIFont",null,null,null,null,null,null,null,null,null,null,null,null,null,B.h,null,null,null,"blackRedwoodCity labelMedium",null,null,null,null)
 B.VK=new A.r(!0,B.o,null,".AppleSystemUIFont",null,null,null,null,null,null,null,null,null,null,null,null,null,B.h,null,null,null,"blackRedwoodCity labelSmall",null,null,null,null)
 B.ZB=new A.dy(B.Xr,B.Wq,B.Xs,B.XT,B.W7,B.Wf,B.WI,B.XO,B.WU,B.Yf,B.VD,B.VV,B.Yc,B.Yw,B.VK)
-B.ZC=new A.d9("Replace",null,null,null,null,null,null)
-B.ZD=new A.d9("POV Preview",null,null,null,null,null,null)
+B.ZC=new A.d9("Empty slots will export as 1-column black photos \u2014 the firmware needs exactly 30 photos.",null,null,null,null,null,null)
+B.ZD=new A.d9("Tap to add a photo",null,null,null,null,null,null)
+B.ZE=new A.d9("Replace",null,null,null,null,null,null)
+B.ZF=new A.d9("POV Preview",null,null,null,null,null,null)
 B.XW=new A.r(!0,null,null,null,null,null,null,B.jz,null,3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.ZE=new A.d9("R Art",null,B.XW,null,null,null,null)
-B.ZF=new A.d9("Preview",null,null,null,null,null,null)
-B.ZG=new A.d9("Remove",null,null,null,null,null,null)
-B.ZH=new A.d9("Speed",null,null,null,null,null,null)
-B.ZI=new A.d9("Agar staff par photo ulti dikhe to on karo",null,null,null,null,null,null)
-B.ZJ=new A.d9("Ye simulation hai \u2014 asal staff par image tab banti hai jab LEDs spin ke sath column-by-column jalti hain. Agar photo ulti dikhe to editor mein Vertical flip on karo.",null,null,null,null,null,null)
-B.ZK=new A.d9("Cancel",null,null,null,null,null,null)
-B.ZL=new A.d9("Duration",null,null,null,null,null,null)
-B.ZM=new A.d9("Done",null,null,null,null,null,null)
-B.ZN=new A.d9("Khaali slots 1-column kaale photo ke tor par export honge \u2014 firmware ko exactly 30 photos chahiye.",null,null,null,null,null,null)
-B.ZO=new A.d9("Vertical flip",null,null,null,null,null,null)
-B.ZP=new A.d9("Save data.h",null,null,null,null,null,null)
+B.ZG=new A.d9("R Art",null,B.XW,null,null,null,null)
+B.ZH=new A.d9("Preview",null,null,null,null,null,null)
+B.ZI=new A.d9("Remove",null,null,null,null,null,null)
+B.ZJ=new A.d9("Flash this file to the Arduino (replace data.h).",null,null,null,null,null,null)
+B.ZK=new A.d9("Speed",null,null,null,null,null,null)
+B.ZL=new A.d9("Turn on if the photo appears upside-down on the staff",null,null,null,null,null,null)
+B.ZM=new A.d9("Cancel",null,null,null,null,null,null)
+B.ZN=new A.d9("Duration",null,null,null,null,null,null)
+B.ZO=new A.d9("This is a simulation \u2014 on the real staff, the image forms as the LEDs light up column by column while spinning. If the photo appears upside-down, turn on Vertical flip in the editor.",null,null,null,null,null,null)
+B.ZP=new A.d9("Done",null,null,null,null,null,null)
+B.ZQ=new A.d9("Vertical flip",null,null,null,null,null,null)
+B.ZR=new A.d9("Save data.h",null,null,null,null,null,null)
 B.zI=new A.d9("Export data.h",null,null,null,null,null,null)
-B.ZQ=new A.d9("Rotate",null,null,null,null,null,null)
-B.ZR=new A.d9("Ye file Arduino mein flash karni hai (data.h replace karo).",null,null,null,null,null,null)
-B.ZS=new A.d9("Tap karo \u2014 photo add karo",null,null,null,null,null,null)
+B.ZS=new A.d9("Rotate",null,null,null,null,null,null)
 B.a25=new A.ads(0,"system")
 B.QO=new A.n(0.056,0.024)
 B.QY=new A.n(0.108,0.3085)
