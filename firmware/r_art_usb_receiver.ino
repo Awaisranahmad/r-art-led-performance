@@ -1,7 +1,6 @@
 // ============================================================
-// R Art LED Performance — USB receiver firmware (ESP8266 NodeMCU)
-//
-// Phase 2 firmware for Rolandi Pisadze's LED staff.
+// R Art LED Performance — USB receiver firmware
+// Board: Seeed Studio XIAO ESP32-S3 Plus
 //
 // WHAT IT DOES
 //   The R Art app (web demo) sends the finished show straight to
@@ -27,20 +26,33 @@
 //   type byte (0 = RGB, 3 bytes/px; 1 = RGBW, 4 bytes/px),
 //   column-major pixels. LED 0 = row 0 (image top).
 //
-// SETUP (Arduino IDE)
-//   Board: NodeMCU 1.0 (ESP-12E) — same as the original sketch.
-//   Libraries: Adafruit NeoPixel, LittleFS (built into ESP8266 core).
-//   Flash this sketch once. After that, shows arrive over USB from
-//   the app — no re-flash needed to change photos.
+// SETUP (Arduino IDE) — follow exactly:
+//   1. Board Manager URL (File > Preferences > Additional URLs):
+//      https://espressif.github.io/arduino-esp32/package_esp32_index.json
+//   2. Tools > Board > esp32 > "Seeed XIAO ESP32S3 Plus"
+//      (esp32 core 3.3.x — Seeed's recommended version).
+//   3. Tools > USB CDC On Boot: Enabled (this is the default on
+//      this board — Serial is the USB port, so the app can talk
+//      to it over Web Serial).
+//   4. Tools > Partition Scheme: "Default with spiffs
+//      (3MB APP/1.5MB SPIFFS)" — IMPORTANT. The board's default
+//      scheme has NO spiffs partition, and LittleFS cannot mount
+//      without one (the sketch would stop at "[FATAL] LittleFS
+//      mount failed."). Do not leave it on the default.
+//   5. Library Manager: install "Adafruit NeoPixel" (by Adafruit).
+//   6. Upload Speed: 921600 (default). Then upload this sketch.
 //   LED_COUNT below MUST match the app's LED setting (default 50,
 //   up to 512). If the app sends a different count, the board
 //   replies "ERR LED COUNT" and keeps the old show.
 //   RGBW strips (SK6812 RGBW): set LED_RGBW to true below.
 //
 // PINS (same as the original sketch)
-//   LED data: D0. Buttons: UP D6, START D5, DOWN D4.
-//   NOTE: the original sketch's Serial prints swap the UP/DOWN
-//   labels — this sketch prints the correct pin names.
+//   LED data: D0 (GPIO1). Buttons: UP D6, START D5, DOWN D4.
+//   NOTE: D6 is GPIO43, the UART0 TX pin. That is fine here:
+//   with USB CDC On Boot enabled (step 3 above) Serial uses the
+//   native USB port and UART0 is unused, so the button works.
+//   The original sketch's Serial prints swap the UP/DOWN labels
+//   — this sketch prints the correct pin names.
 // ============================================================
 
 #include <Adafruit_NeoPixel.h>
@@ -102,6 +114,11 @@ bool hasShow = false;
 
 // One column of pixels (max 512 LEDs x 4 bytes for RGBW).
 uint8_t colBuf[512 * 4];
+
+// Sliding window for the "RART" frame magic. Serial.peekBytes()
+// does not exist in the Arduino Stream API, so bytes are read one
+// at a time and shifted through this window until "RART" appears.
+uint8_t magicWindow[4] = {0, 0, 0, 0};
 
 // =====================================
 // PLAYBACK
@@ -369,12 +386,12 @@ bool readExact(uint8_t *buf, uint32_t len, uint16_t timeoutMs) {
 
 void receiveFrame() {
   // "RART" already consumed by the caller.
-  Serial.println("[USB] Receiving show…");
+  Serial.println("[USB] Receiving show...");
   playing = false;
   clearLeds();
 
   uint8_t header[6];
-  if (!readExact(header, 6, 5000)) {
+  if (!readExact(header, 6, 15000)) {
     Serial.println("ERR TIMEOUT");
     return;
   }
@@ -413,9 +430,10 @@ void receiveFrame() {
   uint32_t remaining = length;
   uint8_t chunk[256];
   bool ok = true;
+  uint32_t chunkIndex = 0;
   while (remaining > 0) {
     const uint32_t want = remaining > sizeof(chunk) ? sizeof(chunk) : remaining;
-    if (!readExact(chunk, want, 5000)) {
+    if (!readExact(chunk, want, 15000)) {
       ok = false;
       break;
     }
@@ -425,9 +443,13 @@ void receiveFrame() {
       break;
     }
     remaining -= want;
-    // Small chase pattern while receiving.
-    leds.setPixelColor((length - remaining) % LED_COUNT, leds.Color(0, 80, 255));
-    leds.show();
+    // Chase pattern sirf har 8th chunk par - har chunk par
+    // leds.show() transfer ko slow karta hai.
+    chunkIndex++;
+    if (chunkIndex % 8 == 0) {
+      leds.setPixelColor((length - remaining) % LED_COUNT, leds.Color(0, 80, 255));
+      leds.show();
+    }
   }
   f.close();
 
@@ -438,7 +460,7 @@ void receiveFrame() {
   }
 
   uint8_t crcBytes[2];
-  if (!readExact(crcBytes, 2, 5000)) {
+  if (!readExact(crcBytes, 2, 15000)) {
     Serial.println("ERR TIMEOUT");
     LittleFS.remove("/data.bin.tmp");
     return;
@@ -471,10 +493,15 @@ void receiveFrame() {
 // =====================================
 
 void setup() {
+  // Bara RX buffer (default sirf 256 bytes): app ke chunks ke
+  // doran LittleFS flash write slow ho to bhi bytes na giren.
+  // setRxBufferSize() hamesha begin() se PEHLE call karo.
+  Serial.setRxBufferSize(4096);
   Serial.begin(115200);
   delay(500);
   Serial.println();
   Serial.println("[SYSTEM] R Art USB receiver");
+  Serial.println("[SYSTEM] Board: XIAO ESP32-S3 Plus");
   Serial.print("[SYSTEM] LEDs: ");
   Serial.println(LED_COUNT);
 #if LED_RGBW
@@ -491,8 +518,13 @@ void setup() {
   leds.setBrightness(BRIGHTNESS);
   clearLeds();
 
-  if (!LittleFS.begin()) {
+  // formatOnFail = true: mount the spiffs partition even if it was
+  // never formatted. If this still fails, the wrong Partition
+  // Scheme is selected — use "Default with spiffs" (see header).
+  if (!LittleFS.begin(true)) {
     Serial.println("[FATAL] LittleFS mount failed.");
+    Serial.println("[FATAL] Tools > Partition Scheme must be");
+    Serial.println("[FATAL] 'Default with spiffs (3MB APP/1.5MB SPIFFS)'.");
     while (true) delay(100);
   }
 
@@ -509,18 +541,20 @@ void setup() {
 // =====================================
 
 void loop() {
-  // A new show arriving over USB? Peek for the "RART" magic.
-  if (Serial.available() >= 4) {
-    uint8_t magic[4];
-    Serial.peekBytes((char *)magic, 4);
-    if (magic[0] == 'R' && magic[1] == 'A' && magic[2] == 'R' &&
-        magic[3] == 'T') {
-      Serial.readBytes((char *)magic, 4);
+  // A new show arriving over USB? Slide incoming bytes through a
+  // 4-byte window until "RART" appears. (Serial.peekBytes() does
+  // not exist, so bytes are read one at a time.)
+  while (Serial.available() > 0) {
+    magicWindow[0] = magicWindow[1];
+    magicWindow[1] = magicWindow[2];
+    magicWindow[2] = magicWindow[3];
+    magicWindow[3] = (uint8_t)Serial.read();
+    if (magicWindow[0] == 'R' && magicWindow[1] == 'A' &&
+        magicWindow[2] == 'R' && magicWindow[3] == 'T') {
       receiveFrame();
+      magicWindow[0] = magicWindow[1] = magicWindow[2] = magicWindow[3] = 0;
       return;
     }
-    // Not a frame — drop one byte so junk cannot stall the loop.
-    Serial.read();
   }
 
   // Waiting pattern when no show is stored yet.
