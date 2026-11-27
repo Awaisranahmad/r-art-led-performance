@@ -43,6 +43,10 @@
 
   <title>r_art_led_performance</title>
   <link rel="manifest" href="manifest.json">
+  <!-- Web Serial shim for direct USB transfer to the LED staff
+       (lib/services/usb_service.dart). Loaded before the app so
+       window.rartSerial exists when Flutter starts. -->
+  <script src="rart_serial.js" defer></script>
 </head>
 <body>
   <!--
