@@ -26,6 +26,12 @@ window.rartSerial = (() => {
 
   async function connect() {
     if (!isSupported()) throw new Error('Web Serial not supported');
+    // Pehle wala connection khula reh gaya ho (failed send ke baad)
+    // to pehle usko band karo - warna port.open() par
+    // "The port is already open" error aata hai.
+    if (port) {
+      await disconnect();
+    }
     // Opens the browser's port chooser — the user picks the ESP32.
     port = await navigator.serial.requestPort();
     await port.open({ baudRate: 115200 });
@@ -38,14 +44,17 @@ window.rartSerial = (() => {
     if (!writer) throw new Error('Not connected');
     const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
     let written = 0;
-    // Small chunks + short pauses: cheap USB-serial chips drop data
-    // when flooded at full speed.
-    const CHUNK = 1024;
+    // Chhote chunks + lambi pause: board ka Serial buffer sirf
+    // 256 bytes ka hota hai, aur LittleFS flash write kabhi kabhi
+    // slow hoti hai - tez bhejne se bytes gir jate hain aur device
+    // "ERR TIMEOUT" bhejta hai. 512 bytes + 25 ms pause se board
+    // ko har chunk likhne ka waqt mil jata hai.
+    const CHUNK = 512;
     for (let i = 0; i < bytes.length; i += CHUNK) {
       const chunk = bytes.slice(i, i + CHUNK);
       await writer.write(chunk);
       written += chunk.length;
-      await new Promise((r) => setTimeout(r, 10));
+      await new Promise((r) => setTimeout(r, 25));
     }
     return written;
   }
